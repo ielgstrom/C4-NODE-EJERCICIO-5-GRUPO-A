@@ -1,4 +1,5 @@
 const inquirer = require("inquirer");
+const { getUsuarioPorDNI } = require("./bd/operacionesDuenyo");
 const {
   cambiarNombre,
   getAllAnimales,
@@ -16,10 +17,10 @@ const preguntaDni = async () => {
     },
   ]);
 
-  // TODO: Comprobar que existe el DNI
-  if (true) {
-    // Cambiamos el DNI por el usuario completo ya que lo vamos a utilizar mas tarde
-    return respuestas.dniUsuario;
+  const usuario = await getUsuarioPorDNI(respuestas.dniUsuario);
+
+  if (usuario !== null && typeof usuario.DNI !== "undefined") {
+    return usuario;
   } else {
     console.log("No existe el DNI");
     process.exit(0);
@@ -90,8 +91,7 @@ const preguntaAnimales = async () => {
 };
 
 const preguntasUsuario = async () => {
-  // se guardara un usuario pero por ahora solo se esta guardando el DNI
-  const dni = await preguntaDni();
+  const usuario = await preguntaDni();
   const { consulta, nombreNuevo } = await preguntaAnimales();
 
   switch (consulta) {
@@ -109,7 +109,7 @@ const preguntasUsuario = async () => {
       await adoptaAnimal();
       break;
     case "cambiarNombre":
-      await cambiarNombre(dni, nombreNuevo);
+      await cambiarNombre(usuario.DNI, nombreNuevo);
       break;
 
     default:
