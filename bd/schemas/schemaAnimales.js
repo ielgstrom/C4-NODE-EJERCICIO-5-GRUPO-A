@@ -18,10 +18,10 @@ const Animal = sequelize.define(
     edad: {
       type: DataTypes.INTEGER,
     },
-    especie: {
+    ID_ESPECIE: {
       type: DataTypes.INTEGER,
     },
-    duenyo: {
+    ID_DUENYO: {
       type: DataTypes.INTEGER,
     },
     NUM_CHIP: {
@@ -36,9 +36,9 @@ const Animal = sequelize.define(
   }
 );
 
-Animal.hasOne(Duenyo, { foreignKey: "duenyo" });
-Animal.hasOne(Especie, { foreignKey: "especie" });
-Duenyo.belongsTo(Animal, { foreignKey: "duenyo" });
-Especie.belongsTo(Animal, { foreignKey: "especie" });
+Animal.hasOne(Duenyo, { foreignKey: "ID" });
+Animal.hasOne(Especie, { foreignKey: "ID" });
+Duenyo.belongsTo(Animal, { foreignKey: "ID" });
+Especie.belongsTo(Animal, { foreignKey: "ID" });
 
 module.exports = Animal;

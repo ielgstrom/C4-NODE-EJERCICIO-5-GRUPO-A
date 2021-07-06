@@ -106,7 +106,7 @@ const preguntasUsuario = async () => {
       break;
     case "adoptarUnAnimal":
       // Aqui pasaremos el usuario completo
-      await adoptaAnimal();
+      adoptaAnimal(usuario);
       break;
     case "cambiarNombre":
       await cambiarNombre(usuario.DNI, nombreNuevo);

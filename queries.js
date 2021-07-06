@@ -1,3 +1,5 @@
+const { getAnimalesSinDuenyo } = require("./bd/operacionesAnimal");
+
 const cambiarNombre = async (dni, nombreNuevo) => {
   // Sacamos el usuario segun el DNI
   // Cambiamos el nombre y lo ponemos en la base de datos
@@ -17,6 +19,7 @@ const getAnimal = async (numChip) => {
 
 const adoptaAnimal = async (usuario) => {
   // Listamos todos los animales sin dueño y creamos una pregunta donde debe elegir cual se queda
+  const animales = await getAnimalesSinDuenyo();
   // se le añade como dueño al animal especificado
 };
 
