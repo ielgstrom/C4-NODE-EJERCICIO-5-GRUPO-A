@@ -11,4 +11,24 @@ const getAnimalesSinDuenyo = async () => {
   return animales;
 };
 
-module.exports = { getAnimalesSinDuenyo };
+const anyadirDuenyoMascota = async (idDuenyo, idMascota) => {
+  try {
+    const animalModificado = await Animal.update(
+      {
+        ID_DUENYO: idDuenyo,
+      },
+      {
+        where: {
+          id: idMascota,
+        },
+      }
+    );
+  } catch (err) {
+    console.log("No se ha podido modificar la mascota.");
+    console.log(err.message);
+  }
+
+  return true;
+};
+
+module.exports = { getAnimalesSinDuenyo, anyadirDuenyoMascota };
