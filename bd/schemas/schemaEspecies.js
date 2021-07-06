@@ -1,21 +1,26 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("..");
-const duenyo = require("./schemaDuenyo");
-const animal = require("./schemaAnimales");
+const sequelize = require("./conexionSQL");
 
-const especies = sequelize.define("especies", {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
+const Especie = sequelize.define(
+  "Especie",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    nombre: {
+      type: DataTypes.STRING(30),
+      allowNull: false,
+      unique: true,
+    },
   },
-  nombre: {
-    type: DataTypes.STRING(30),
-    allowNull: false,
-    unique: true,
-  },
-});
+  {
+    tableName: "especie",
+    timestamps: false,
+  }
+);
 
-module.exports = especie;
+module.exports = Especie;
 
-//en este esschema espeecificamos la espeecie de cada animal
+// en este esschema espeecificamos la espeecie de cada animal
