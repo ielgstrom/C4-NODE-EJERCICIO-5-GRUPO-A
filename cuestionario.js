@@ -17,9 +17,9 @@ const preguntaDni = async () => {
     },
   ]);
 
-  const usuario = getUsuarioPorDNI(respuestas.dniUsuario);
-  if (typeof usuario.DNI === "undefined") {
-    // Cambiamos el DNI por el usuario completo ya que lo vamos a utilizar mas tarde
+  const usuario = await getUsuarioPorDNI(respuestas.dniUsuario);
+
+  if (usuario !== null && typeof usuario.DNI !== "undefined") {
     return usuario;
   } else {
     console.log("No existe el DNI");
