@@ -43,7 +43,10 @@ const adoptaAnimal = async (usuario) => {
     },
   ]);
 
-  anyadirDuenyoMascota(usuario.id, respuesta.animalAdopcion.id);
+  await anyadirDuenyoMascota(usuario.id, respuesta.animalAdopcion.id);
+
+  console.log(`Has adoptado a ${respuesta.animalAdopcion.nombre}`);
+  process.exit(0);
 };
 
 module.exports = {
