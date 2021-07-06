@@ -22,3 +22,4 @@ const Especies = sequelize.define(
 module.exports = Especies;
 
 
+//en este esschema espeecificamos la espeecie de cada animal
