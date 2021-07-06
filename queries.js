@@ -1,4 +1,8 @@
-const { getAnimalesSinDuenyo } = require("./bd/operacionesAnimal");
+const inquirer = require("inquirer");
+const {
+  getAnimalesSinDuenyo,
+  anyadirDuenyoMascota,
+} = require("./bd/operacionesAnimal");
 
 const cambiarNombre = async (dni, nombreNuevo) => {
   // Sacamos el usuario segun el DNI
@@ -20,7 +24,26 @@ const getAnimal = async (numChip) => {
 const adoptaAnimal = async (usuario) => {
   // Listamos todos los animales sin dueño y creamos una pregunta donde debe elegir cual se queda
   const animales = await getAnimalesSinDuenyo();
-  // se le añade como dueño al animal especificado
+
+  // Se le añade como dueño al animal especificado
+  const animalesFormateados = animales.map((animal) => {
+    const animalTemp = {};
+
+    animalTemp.value = { nombre: animal.nombre, id: animal.id };
+    animalTemp.name = `${animal.nombre}, ${animal.ID_ESPECIE}`;
+    return animalTemp;
+  });
+
+  const respuesta = await inquirer.prompt([
+    {
+      name: "animalAdopcion",
+      type: "list",
+      message: "Elija la mascota que quiere adoptar ",
+      choices: animalesFormateados,
+    },
+  ]);
+
+  anyadirDuenyoMascota(usuario.id, respuesta.animalAdopcion.id);
 };
 
 module.exports = {
