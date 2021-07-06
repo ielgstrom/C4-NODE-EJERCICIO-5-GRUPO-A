@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const {
   getAnimalesSinDuenyo,
+  getAnimalesConDuenyo,
   anyadirDuenyoMascota,
 } = require("./bd/operacionesAnimal");
 
@@ -9,8 +10,18 @@ const cambiarNombre = async (dni, nombreNuevo) => {
   // Cambiamos el nombre y lo ponemos en la base de datos
 };
 
-const getAllAnimales = async () => {
+const getAllAnimales = async (idDuenyo) => {
+
+  const animales = await getAnimalesConDuenyo();
   // Listar todos los animales ordenados por especie y por nombre
+  const animalesAllFormateados = animales.map((animal) => {
+    const animalAllTemp = {};
+
+    animalAllTemp.value = { nombre: animal.nombre, id: animal.id };
+    animalAllTemp.name = `${animal.nombre}, ${animal.ID_ESPECIE}`;
+    return animalAllTemp;
+
+  })
 };
 
 const getAnimalesFromEspecie = async (especie) => {

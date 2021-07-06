@@ -11,6 +11,16 @@ const getAnimalesSinDuenyo = async () => {
   return animales;
 };
 
+const getAnimalesConDuenyo = async (idDuenyo) => {
+  const animales = await Animal.findAll({
+    where: {
+      ID_DUENYO: idDuenyo,
+    },
+  });
+
+  return animales;
+};
+
 const anyadirDuenyoMascota = async (idDuenyo, idMascota) => {
   try {
     const animalModificado = await Animal.update(
@@ -31,4 +41,4 @@ const anyadirDuenyoMascota = async (idDuenyo, idMascota) => {
   return true;
 };
 
-module.exports = { getAnimalesSinDuenyo, anyadirDuenyoMascota };
+module.exports = { getAnimalesSinDuenyo, anyadirDuenyoMascota,getAnimalesConDuenyo};
