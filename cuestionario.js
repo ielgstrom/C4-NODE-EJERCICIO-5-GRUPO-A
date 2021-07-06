@@ -1,5 +1,11 @@
 const inquirer = require("inquirer");
-const { cambiarNombre } = require("./queries");
+const {
+  cambiarNombre,
+  getAllAnimales,
+  getAnimalesFromEspecie,
+  getAnimal,
+  adoptaAnimal,
+} = require("./queries");
 
 const preguntaDni = async () => {
   const respuestas = await inquirer.prompt([
@@ -12,11 +18,35 @@ const preguntaDni = async () => {
 
   // TODO: Comprobar que existe el DNI
   if (true) {
+    // Cambiamos el DNI por el usuario completo ya que lo vamos a utilizar mas tarde
     return respuestas.dniUsuario;
   } else {
     console.log("No existe el DNI");
     process.exit(0);
   }
+};
+
+const preguntaEspecie = async () => {
+  const respuestas = await inquirer.prompt([
+    {
+      name: "especie",
+      type: "input",
+      message: "Introduzca su el nombre de la especie: ",
+    },
+  ]);
+
+  return respuestas.especie.toLowerCase();
+};
+const preguntaChip = async () => {
+  const respuestas = await inquirer.prompt([
+    {
+      name: "chip",
+      type: "input",
+      message: "Introduzca su el Número del chip: ",
+    },
+  ]);
+
+  return respuestas.chip.toLowerCase();
 };
 
 const preguntaAnimales = async () => {
@@ -60,26 +90,30 @@ const preguntaAnimales = async () => {
 };
 
 const preguntasUsuario = async () => {
+  // se guardara un usuario pero por ahora solo se esta guardando el DNI
   const dni = await preguntaDni();
   const { consulta, nombreNuevo } = await preguntaAnimales();
 
   switch (consulta) {
     case "listarAnimales":
+      await getAllAnimales();
       break;
     case "listarAnimalesDeUnaEspecie":
+      await getAnimalesFromEspecie(await preguntaEspecie());
       break;
     case "datosUnAnimal":
+      getAnimal(await preguntaChip());
       break;
     case "adoptarUnAnimal":
+      // Aqui pasaremos el usuario completo
+      await adoptaAnimal();
       break;
     case "cambiarNombre":
-      cambiarNombre(dni, nombreNuevo);
-
+      await cambiarNombre(dni, nombreNuevo);
       break;
 
     default:
       process.exit(1);
-      break;
   }
 };
 
