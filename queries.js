@@ -3,9 +3,16 @@ const {
   getAnimalesSinDuenyo,
   anyadirDuenyoMascota,
 } = require("./bd/operacionesAnimal");
+const {
+  getUsuarioPorDNI,
+  nuevoNombreUsuario,
+} = require("./bd/operacionesDuenyo");
 
 const cambiarNombre = async (dni, nombreNuevo) => {
   // Sacamos el usuario segun el DNI
+  const pedro = await nuevoNombreUsuario(dni, nombreNuevo);
+  console.log(`Te has cambiado el nombre a ${nombreNuevo}`);
+  process.exit(0);
   // Cambiamos el nombre y lo ponemos en la base de datos
 };
 

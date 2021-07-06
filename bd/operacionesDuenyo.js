@@ -11,4 +11,22 @@ const getUsuarioPorDNI = async (dniUsuario) => {
   return duenyo;
 };
 
-module.exports = { getUsuarioPorDNI };
+const nuevoNombreUsuario = async (DNIescogido, nuevoNombre) => {
+  try {
+    const newName = await Duenyo.update(
+      {
+        nombre: nuevoNombre,
+      },
+      {
+        where: {
+          DNI: DNIescogido,
+        },
+      }
+    );
+    // return newName;
+  } catch {
+    console.log("No hemos podido cambiar tu nombre, sorry");
+    console.log(err.message);
+  }
+};
+module.exports = { getUsuarioPorDNI, nuevoNombreUsuario };
