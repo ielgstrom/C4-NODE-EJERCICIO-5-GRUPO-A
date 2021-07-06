@@ -2,6 +2,7 @@ const inquirer = require("inquirer");
 const {
   getAnimalesSinDuenyo,
   anyadirDuenyoMascota,
+  buscarAnimalporChip,
 } = require("./bd/operacionesAnimal");
 const {
   getUsuarioPorDNI,
@@ -25,7 +26,8 @@ const getAnimalesFromEspecie = async (especie) => {
 };
 
 const getAnimal = async (numChip) => {
-  // Listar los datos de un animal con el numero de chip especificado
+  const animalPorChip = await buscarAnimalporChip(numChip);
+  process.exit(0);
 };
 
 const adoptaAnimal = async (usuario) => {
