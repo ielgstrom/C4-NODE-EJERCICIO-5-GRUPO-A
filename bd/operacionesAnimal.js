@@ -1,5 +1,6 @@
 const { Op } = require("sequelize");
 const Animal = require("./schemas/schemaAnimales");
+const Duenyo = require("./schemas/schemaDuenyo");
 const Especie = require("./schemas/schemaEspecies");
 
 const getAnimalesSinDuenyo = async () => {
@@ -51,13 +52,19 @@ const anyadirDuenyoMascota = async (idDuenyo, idMascota) => {
   }
 };
 
-const buscarAnimalporChip = async (chipAnimal) => {
+const buscarAnimalporChip = async (chipAnimal, IDescogido) => {
   try {
     const animalPorChip = await Animal.findOne({
       where: {
         NUM_CHIP: chipAnimal,
+        ID_DUENYO: IDescogido,
       },
     });
+    if (animalPorChip === null) {
+      console.log("No tienes ningún animal con ese chip");
+      return;
+    }
+
     const idAnimal = animalPorChip.dataValues.ID_ESPECIE;
 
     const especiePorChipId = await Especie.findOne({

@@ -25,8 +25,8 @@ const getAnimalesFromEspecie = async (especie) => {
   // Listar animales de una especie
 };
 
-const getAnimal = async (numChip) => {
-  const animalPorChip = await buscarAnimalporChip(numChip);
+const getAnimal = async (numChip, dni) => {
+  const animalPorChip = await buscarAnimalporChip(numChip, dni);
   process.exit(0);
 };
 

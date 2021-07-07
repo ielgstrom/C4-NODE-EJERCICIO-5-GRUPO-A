@@ -102,7 +102,7 @@ const preguntasUsuario = async () => {
       await getAnimalesFromEspecie(await preguntaEspecie());
       break;
     case "datosUnAnimal":
-      getAnimal(await preguntaChip());
+      getAnimal(await preguntaChip(), usuario.id);
       break;
     case "adoptarUnAnimal":
       // Aqui pasaremos el usuario completo
