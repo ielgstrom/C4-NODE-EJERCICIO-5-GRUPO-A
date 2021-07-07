@@ -12,6 +12,24 @@ const getAnimalesSinDuenyo = async () => {
   return animales;
 };
 
+const getAnimalPorId = async (id) => {
+  const animales = await Animal.findOne({
+    where: {
+      id,
+    },
+  });
+
+  return animales;
+};
+
+const existeAnimalSinDuenyoPorId = async (idAnimal) => {
+  const animalesSinDuenyo = await getAnimalesSinDuenyo();
+  const existeAnimal = animalesSinDuenyo.find(
+    (animal) => animal.id === idAnimal
+  );
+
+  return existeAnimal;
+};
 const anyadirDuenyoMascota = async (idDuenyo, idMascota) => {
   try {
     const animalModificado = await Animal.update(
@@ -24,12 +42,13 @@ const anyadirDuenyoMascota = async (idDuenyo, idMascota) => {
         },
       }
     );
+
+    return animalModificado;
   } catch (err) {
     console.log("No se ha podido modificar la mascota.");
     console.log(err.message);
+    return false;
   }
-
-  return true;
 };
 
 const buscarAnimalporChip = async (chipAnimal) => {
@@ -59,4 +78,6 @@ module.exports = {
   getAnimalesSinDuenyo,
   anyadirDuenyoMascota,
   buscarAnimalporChip,
+  existeAnimalSinDuenyoPorId,
+  getAnimalPorId,
 };
