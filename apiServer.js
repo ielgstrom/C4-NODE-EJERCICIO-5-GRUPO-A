@@ -75,6 +75,29 @@ app.put("/adoptaAnimal", async (req, res, next) => {
   }
 });
 
+//Esta sera la funcion que cambia de nombre de la persona seleccionada
+app.put("/cambiarNombre", async (req, res, next) => {
+  const { dni, nombre } = req.body;
+  const usuario = await getUsuarioPorDNI(dni);
+  if (usuario !== null && typeof usuario.DNI !== "undefined") {
+    const nuevoNombre = await nuevoNombreUsuario(usuario.DNI, nombre);
+    if (nuevoNombre[0] === 1) {
+      res.json({
+        mensaje: `Te has cambiado el nombre a ${nombre}`,
+      });
+    } else {
+      // Envia un error general
+      next(new Error());
+    }
+  } else {
+    next({
+      codigo: 403,
+      error: true,
+      message: "No existe ningun usuario con el dni especificado",
+    });
+  }
+});
+
 // Error de ruta no encontrada
 app.use((req, res, next) => {
   res.status(404).send({ error: true, message: "Recurso no encontrado" });

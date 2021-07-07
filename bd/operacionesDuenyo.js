@@ -23,7 +23,7 @@ const nuevoNombreUsuario = async (DNIescogido, nuevoNombre) => {
         },
       }
     );
-    // return newName;
+    return newName;
   } catch {
     console.log("No hemos podido cambiar tu nombre, sorry");
     console.log(err.message);
