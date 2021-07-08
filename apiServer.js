@@ -12,6 +12,8 @@ const {
   nuevoNombreUsuario,
 } = require("./bd/operacionesDuenyo");
 
+const Duenyo = require("./bd/schemas/schemaDuenyo");
+
 const app = express();
 const puerto = 5000;
 
@@ -88,6 +90,39 @@ app.put("/cambiarNombre", async (req, res, next) => {
     } else {
       // Envia un error general
       next(new Error());
+    }
+  } else {
+    next({
+      codigo: 403,
+      error: true,
+      message: "No existe ningun usuario con el dni especificado",
+    });
+  }
+});
+
+app.use("/mostrarUnAnimal", async (req, res, next) => {
+  const { dni, numChip } = req.body;
+  const duenyo = await Duenyo.findOne({
+    where: {
+      DNI: dni,
+    },
+  });
+  if (duenyo !== null) {
+    const usuario = await getUsuarioPorDNI(duenyo.DNI);
+    if (usuario !== null && typeof usuario.DNI !== "undefined") {
+      const animalConsultado = await buscarAnimalporChip(numChip, duenyo.id);
+      if (animalConsultado !== undefined) {
+        res.json({
+          mensaje: animalConsultado,
+        });
+      } else {
+        const nuevoError = new Error(
+          `No tienes ningun animal con numero de chip ${numChip}`
+        );
+        nuevoError.codigo = 400;
+        // Envia un error general
+        return next(nuevoError);
+      }
     }
   } else {
     next({
