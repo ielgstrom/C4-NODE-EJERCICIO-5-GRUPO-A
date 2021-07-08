@@ -61,7 +61,7 @@ const buscarAnimalporChip = async (chipAnimal, IDescogido) => {
       },
     });
     if (animalPorChip === null) {
-      return "No tienes ningún animal con ese chip";
+      return undefined;
     }
 
     const idAnimal = animalPorChip.dataValues.ID_ESPECIE;

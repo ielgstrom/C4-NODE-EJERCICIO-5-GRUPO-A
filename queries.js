@@ -27,6 +27,10 @@ const getAnimalesFromEspecie = async (especie) => {
 
 const getAnimal = async (numChip, dni) => {
   const animalPorChip = await buscarAnimalporChip(numChip, dni);
+  if (animalPorChip === undefined) {
+    console.log(`No tienes ningun animal con chip numero ${numChip}`);
+    process.exit(0);
+  }
   console.log(animalPorChip);
   process.exit(0);
 };
