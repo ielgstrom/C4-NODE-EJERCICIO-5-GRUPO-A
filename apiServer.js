@@ -108,20 +108,26 @@ app.use("/mostrarUnAnimal", async (req, res, next) => {
     },
   });
   if (duenyo !== null) {
-    const usuario = await getUsuarioPorDNI(duenyo.DNI);
-    if (usuario !== null && typeof usuario.DNI !== "undefined") {
-      const animalConsultado = await buscarAnimalporChip(numChip, duenyo.id);
-      if (animalConsultado !== undefined) {
-        res.json({
-          mensaje: animalConsultado,
-        });
-      } else {
-        const nuevoError = new Error(
-          `No tienes ningun animal con numero de chip ${numChip}`
-        );
-        nuevoError.codigo = 400;
-        // Envia un error general
-        return next(nuevoError);
+    if (duenyo.dataValues.DNI === dni) {
+      const usuario = await getUsuarioPorDNI(duenyo.DNI);
+      if (usuario !== null && typeof usuario.DNI !== "undefined") {
+        const animalConsultado = await buscarAnimalporChip(numChip, duenyo.id);
+        if (animalConsultado !== undefined) {
+          res.json({
+            mensaje: animalConsultado,
+          });
+        } else {
+          // const nuevoError = new Error(
+          //   `No tienes ningun animal con numero de chip ${numChip}`
+          // );
+          // nuevoError.codigo = 400;
+          // Envia un error general
+          return next({
+            codigo: 400,
+            error: true,
+            message: `No tienes ningun animal con numero de chip ${numChip}`,
+          });
+        }
       }
     }
   } else {
