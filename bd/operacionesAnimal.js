@@ -61,8 +61,7 @@ const buscarAnimalporChip = async (chipAnimal, IDescogido) => {
       },
     });
     if (animalPorChip === null) {
-      console.log("No tienes ningún animal con ese chip");
-      return;
+      return "No tienes ningún animal con ese chip";
     }
 
     const idAnimal = animalPorChip.dataValues.ID_ESPECIE;
@@ -72,9 +71,7 @@ const buscarAnimalporChip = async (chipAnimal, IDescogido) => {
         id: idAnimal,
       },
     });
-    console.log(
-      `El chip ${animalPorChip.dataValues.NUM_CHIP} es de ${animalPorChip.dataValues.nombre}, que es un ${especiePorChipId.dataValues.nombre} y tiene ${animalPorChip.dataValues.edad} años.`
-    );
+    return `El chip ${animalPorChip.dataValues.NUM_CHIP} es de ${animalPorChip.dataValues.nombre}, que es un ${especiePorChipId.dataValues.nombre} y tiene ${animalPorChip.dataValues.edad} años.`;
   } catch (err) {
     console.log("No se ha podido encontrar tu animal con ese numero de chip");
     console.log(err.message);
