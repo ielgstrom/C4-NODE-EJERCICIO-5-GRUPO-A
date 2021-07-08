@@ -3,6 +3,7 @@ const {
   getAnimalesSinDuenyo,
   anyadirDuenyoMascota,
   buscarAnimalporChip,
+  buscarAnimalporIdDuenyo,
 } = require("./bd/operacionesAnimal");
 const {
   getUsuarioPorDNI,
@@ -17,8 +18,15 @@ const cambiarNombre = async (dni, nombreNuevo) => {
   // Cambiamos el nombre y lo ponemos en la base de datos
 };
 
-const getAllAnimales = async () => {
+const getAllAnimales = async (idDuenyo) => {
   // Listar todos los animales ordenados por especie y por nombre
+  const animalPorIdDuenyo = await buscarAnimalporIdDuenyo(idDuenyo);
+  if (animalPorIdDuenyo === undefined) {
+    console.log(`Este dueño no tiene ningun animalito${idDuenyo}`);
+    process.exit(0);
+  }
+  console.log(animalPorIdDuenyo);
+  process.exit(0);
 };
 
 const getAnimalesFromEspecie = async (especie) => {

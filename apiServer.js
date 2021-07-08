@@ -3,8 +3,10 @@ const {
   getAnimalesSinDuenyo,
   anyadirDuenyoMascota,
   buscarAnimalporChip,
+  buscarAnimalporIdDuenyo,
   existeAnimalSinDuenyoPorId,
   getAnimalPorId,
+  getAllAnimales,
 } = require("./bd/operacionesAnimal");
 
 const {
@@ -13,6 +15,7 @@ const {
 } = require("./bd/operacionesDuenyo");
 
 const Duenyo = require("./bd/schemas/schemaDuenyo");
+const Animal = require("./bd/schemas/schemaAnimales");
 
 const app = express();
 const puerto = 5000;
@@ -77,7 +80,7 @@ app.put("/adoptaAnimal", async (req, res, next) => {
   }
 });
 
-//Esta sera la funcion que cambia de nombre de la persona seleccionada
+// Esta sera la funcion que cambia de nombre de la persona seleccionada
 app.put("/cambiarNombre", async (req, res, next) => {
   const { dni, nombre } = req.body;
   const usuario = await getUsuarioPorDNI(dni);
@@ -138,6 +141,46 @@ app.use("/mostrarUnAnimal", async (req, res, next) => {
     });
   }
 });
+
+app.use("/mostrarAnimalesxIdDuenyo", async (req, res, next) => {
+  const {idDuenyo } = req.body;
+  const animal = await Duenyo.findOne({
+    where: {
+      ID_DUENYO: idDuenyo,
+    },
+  });
+  if (idDuenyo !== null) {
+    if (animal.dataValues.ID_DUENYO === idDuenyo) {
+      const usuario = await getAllAnimales(idDuenyo);
+      if (usuario !== null && typeof usuario.idDuenyo !== "undefined") {
+        const animalConsultado = await buscarAnimalporIdDuenyo(animal.idDuenyo);
+        if (animalConsultado !== undefined) {
+          res.json({
+            mensaje: animalConsultado,
+          });
+        } else {
+          // const nuevoError = new Error(
+          //   `No tienes ningun animal con numero de chip ${numChip}`
+          // );
+          // nuevoError.codigo = 400;
+          // Envia un error general
+          return next({
+            codigo: 400,
+            error: true,
+            message: `No tienes ningun animal con tu id de dueño: ${idDuenyo}`,
+          });
+        }
+      }
+    }
+  } else {
+    next({
+      codigo: 403,
+      error: true,
+      message: "No existe ningun usuario con el dni especificado",
+    });
+  }
+});
+
 
 // Error de ruta no encontrada
 app.use((req, res, next) => {
