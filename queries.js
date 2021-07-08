@@ -22,7 +22,7 @@ const getAllAnimales = async (idDuenyo) => {
   // Listar todos los animales ordenados por especie y por nombre
   const animalPorIdDuenyo = await buscarAnimalporIdDuenyo(idDuenyo);
   if (animalPorIdDuenyo === undefined) {
-    console.log(`Este dueño no tiene ningun animalito${idDuenyo}`);
+    console.log(`Este dueño no tiene ningun animalito, su DNI es: ${idDuenyo}`);
     process.exit(0);
   }
   console.log(animalPorIdDuenyo);
