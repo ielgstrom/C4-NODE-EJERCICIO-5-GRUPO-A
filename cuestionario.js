@@ -96,7 +96,7 @@ const preguntasUsuario = async () => {
 
   switch (consulta) {
     case "listarAnimales":
-      await getAllAnimales();
+      await getAllAnimales(usuario.id);
       break;
     case "listarAnimalesDeUnaEspecie":
       await getAnimalesFromEspecie(await preguntaEspecie());

@@ -78,10 +78,43 @@ const buscarAnimalporChip = async (chipAnimal, IDescogido) => {
   }
 };
 
+const buscarAnimalporIdDuenyo = async (idDueñoEscogido) => {
+  try {
+    const animalPorIdDuenyo = await Animal.findAll({
+      where: {
+        ID_DUENYO: idDueñoEscogido,
+      },
+
+    });
+    if (animalPorIdDuenyo === null) {
+      return undefined;
+    }
+    /* const arrayanimales = []
+    for (const animal of animalPorIdDuenyo){
+      console.log(animalPorIdDuenyo);
+      arrayanimales.push(animalPorIdDuenyo[animal].dataValues.nombre);
+    }
+    console.log(arrayanimales);
+    */
+    const arrayanimales = animalPorIdDuenyo.map( elemento =>
+      elemento.dataValues.nombre
+    );
+    console.log(arrayanimales);
+    
+    return `El dueño con id de dueño: ${animalPorIdDuenyo.dataValues.ID_DUENYO}`;
+  } catch (err) {
+    console.log("No se ha podido encontrar tu animal con ese numero de id de dueño");
+    console.log(err.message);
+  }
+};
+
+
+
 module.exports = {
   getAnimalesSinDuenyo,
   anyadirDuenyoMascota,
   buscarAnimalporChip,
+  buscarAnimalporIdDuenyo,
   existeAnimalSinDuenyoPorId,
   getAnimalPorId,
 };
